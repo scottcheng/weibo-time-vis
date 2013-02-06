@@ -7,7 +7,7 @@ block content
 
   #splash
     .content
-      a(href='#vis', title='Demo')
+      a(href='#vis', title='Demo', onclick="$('html, body').animate({scrollTop: $('#vis').offset().top});return false;")
         p
           img(src='images/screenshots/initial.png')
         p Play with it below &darr;
@@ -42,8 +42,6 @@ block content
       h2 Demo
 
   #vis
-    //- .content
-    //-   h2 Demo
     svg
       g#user-status-links-wrapper
       g#status-layers-wrapper
