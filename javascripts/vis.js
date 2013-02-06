@@ -32,15 +32,15 @@ var vis = function(data) {
 
   // process data
   var data = (function() {
+    data.statuses.values.forEach(function(d) {
+      d.sentiment = Math.random();  // random sentiment...
+    });
+
     data.statuses.byTopic = d3.nest()
       .key(function(d) {
         return d.topic;
       })
       .entries(data.statuses.values);
-
-    data.statuses.values.forEach(function(d) {
-      d.sentiment = Math.random();
-    });
 
     data.provinces = d3.nest()
       .key(function(d) {
@@ -393,6 +393,9 @@ var vis = function(data) {
         .key(function(d) {
           return whichLayer(d.created_at_time);
         })
+        .sortKeys(function(a, b) {
+          return a - b;
+        })
         .sortValues(function(a, b) {
           var topicIdA = topicOrdinal(a.topic);
           var topicIdB = topicOrdinal(b.topic);
@@ -531,54 +534,62 @@ var vis = function(data) {
                   return baselineD(d, layerId, {expanded: isExpanded[layerId]});
                 });
 
-            var offsets = [];
+            var offsets = {};
             var sum = 0;
-            data.statuses.byLayer[layerId].byTopic.forEach(function(topic) {
-              offsets.push(sum);
+            var len = data.statuses.byLayer[layerId].byTopic.length;
+            for (var i = 0; i < len; i++) {
+              var topic = data.statuses.byLayer[layerId].byTopic[i];
+              offsets[topic.key] = sum;
               if (topicSelected[topicOrdinal(topic.key)]) {
                 sum += topic.values.length;
               };
-            });
+            }
 
             data.statuses.byLayer[layerId].byTopic.forEach(function(topic) {
-              statusCircleLayers[layerId][topicOrdinal(topic.key)]
-                .transition()
-                  .attr('transform', function(d, i) {
-                    return topicSelected[topicOrdinal(topic.key)]
-                      ? statusTranform(d,
-                          offsets[topicOrdinal(topic.key)] + i,
+              var circles = statusCircleLayers[layerId][topicOrdinal(topic.key)];
+              if (circles) {
+                circles
+                  .transition()
+                    .attr('transform', function(d, i) {
+                      return topicSelected[topicOrdinal(topic.key)]
+                        ? statusTranform(d,
+                            offsets[topic.key] + i,
+                            sum,
+                            {expanded: isExpanded[layerId]})
+                        : statusTranform(d,
+                            offsets[topic.key],
+                            sum,
+                            {expanded: isExpanded[layerId]});
+                    })
+                    .attr('r', function(d) {
+                      return topicSelected[topicOrdinal(topic.key)]
+                        ? statusR(d.reposts_count * 5 + d.comments_count)
+                        : 0;
+                    });
+              }
+              var paths = linkPathLayers[layerId][topicOrdinal(topic.key)];
+              if (paths) {
+                paths
+                  .classed('expanded', isExpanded[layerId])
+                  .classed('topic-deselected', !topicSelected[topicOrdinal(topic.key)])
+                  .transition()
+                    .attr('d', function(d, i) {
+                      return topicSelected[topicOrdinal(topic.key)]
+                        ? linkD(d,
+                          offsets[topic.key] + i,
                           sum,
                           {expanded: isExpanded[layerId]})
-                      : statusTranform(d,
-                          offsets[topicOrdinal(topic.key)],
-                          sum,
-                          {expanded: isExpanded[layerId]});
-                  })
-                  .attr('r', function(d) {
-                    return topicSelected[topicOrdinal(topic.key)]
-                      ? statusR(d.reposts_count * 5 + d.comments_count)
-                      : 0;
-                  });
-              linkPathLayers[layerId][topicOrdinal(topic.key)]
-                .classed('expanded', isExpanded[layerId])
-                .classed('topic-deselected', !topicSelected[topicOrdinal(topic.key)])
-                .transition()
-                  .attr('d', function(d, i) {
-                    return topicSelected[topicOrdinal(topic.key)]
-                      ? linkD(d,
-                        offsets[topicOrdinal(topic.key)] + i,
-                        sum,
-                        {expanded: isExpanded[layerId]})
-                      : linkD(d,
-                          offsets[topicOrdinal(topic.key)],
-                          sum,
-                          {expanded: isExpanded[layerId]});
-                  })
-                  .style('stroke', function(d) {
-                    return isExpanded[layerId]
-                      ? colors[topicOrdinal(d.topic)][5]
-                      : '';
-                  });
+                        : linkD(d,
+                            offsets[topic.key],
+                            sum,
+                            {expanded: isExpanded[layerId]});
+                    })
+                    .style('stroke', function(d) {
+                      return isExpanded[layerId]
+                        ? colors[topicOrdinal(d.topic)][5]
+                        : '';
+                    });
+              }
             });
           } else {
             // render all layers
