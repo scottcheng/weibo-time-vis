@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    #vis
+      svg
+        g#user-status-links-wrapper
+        g#status-layers-wrapper
+        g#statuses-wrapper
+        g#status-stack-wrapper
+        g#provice-ellipses-wrapper
+        g#users-wrapper
+      #stack-normalization-switch
+        .switch.denormalize
+        .switch.normalize
+      #user-info
+        a#profile-link
+          img#avatar
+        #detailed-info
+          #name
+          #location
+          #followers-count
+          #friends-count
+          #statuses-count
+
+block append stylesheets
+  link(rel='stylesheet', href='stylesheets/lib/tipsy.css')
+  link(rel='stylesheet', href='stylesheets/lib/colorbrewer.css')
+
+block append scripts
+  script(src='javascripts/lib/d3.min.js')
+  script(src='javascripts/lib/jquery.tipsy.js')
+  script(src='javascripts/lib/colorbrewer.js')
+  script(src='javascripts/vis.js')
