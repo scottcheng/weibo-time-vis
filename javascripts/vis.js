@@ -979,10 +979,9 @@ var vis = function(data) {
   })();
 };
 
-// d3.json('/api/users', function(users) {
-d3.json('/data/users.json', function(users) {
-  d3.json('/data/statuses.json', function(statuses){
-    d3.json('/data/provinces.json', function(provinces) {
+d3.json('data/users.json', function(users) {
+  d3.json('data/statuses.json', function(statuses){
+    d3.json('data/provinces.json', function(provinces) {
       var filteredStatuses = [];
       statuses.forEach(function(d) {
         if (Math.random() < .5) {
