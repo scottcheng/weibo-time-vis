@@ -70,7 +70,7 @@ var vis = function(data) {
   var axisW = svgW - stackW - marginIn;
   var svg = d3.select('svg')
     .attr('width', svgW)
-    .attr('height', 780);
+    .attr('height', 808);
 
   // Initialize detailed user info part.
   $('#user-info').css('left', axisW + marginIn);
