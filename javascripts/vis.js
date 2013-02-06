@@ -988,12 +988,18 @@ var vis = function(data) {
 d3.json('/data/users.json', function(users) {
   d3.json('/data/statuses.json', function(statuses){
     d3.json('/data/provinces.json', function(provinces) {
+      var filteredStatuses = [];
+      statuses.forEach(function(d) {
+        if (Math.random() < .5) {
+          filteredStatuses.push(d);
+        }
+      });
       vis({
         users: {
           values: users
         },
         statuses: {
-          values: statuses
+          values: filteredStatuses
         },
         provinces: provinces.provinces
       });
