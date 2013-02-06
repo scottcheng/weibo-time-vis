@@ -5,12 +5,7 @@ var vis = function(data) {
     colorbrewer.GnBu[9],
     colorbrewer.BuPu[9],
     colorbrewer.PuRd[9],
-    colorbrewer.YlOrBr[9],
-    colorbrewer.Blues[9],
-    colorbrewer.Greens[9],
-    colorbrewer.Oranges[9],
-    colorbrewer.Reds[9],
-    colorbrewer.PuBu[9]
+    colorbrewer.YlOrBr[9]
   ];
 
   Date.prototype.format = (function() {
@@ -742,8 +737,8 @@ var vis = function(data) {
         .append('<img />')
         .children()
           .addClass('active')
-          .css('left', stackLeft + stackWidth - iconWidth - iconMargin)
-          .css('top', stackTop + iconMargin)
+          .css('left', stackLeft + stackWidth - iconWidth - iconMargin + 50)
+          .css('top', stackTop + iconMargin + 50)
           .attr({
             src: '/images/stacked-area-chart.png',
             width: iconWidth,
@@ -757,8 +752,8 @@ var vis = function(data) {
       var normalizeBtn = $('#stack-normalization-switch > .normalize')
         .append('<img />')
         .children()
-          .css('left', stackLeft + stackWidth - iconWidth - iconMargin)
-          .css('top', stackTop + iconMargin * 2 + iconHeight)
+          .css('left', stackLeft + stackWidth - iconWidth - iconMargin + 50)
+          .css('top', stackTop + iconMargin * 2 + iconHeight + 50)
           .attr({
             src: '/images/stacked-area-chart-n.png',
             width: iconWidth,

@@ -1,0 +1,85 @@
+extends layout
+
+block content
+  #title
+    .content
+      h1 Weibo Visualization
+
+  #splash
+    .content
+      a(href='#vis', title='Demo')
+        p
+          img(src='images/screenshots/initial.png')
+        p Play with it below &darr;
+
+  #write-up
+    .content
+      p
+        | Sylvia and I made this visualization as our 
+        a(href='http://vis.pku.edu.cn/wiki/public_course/visclass_f12/project/group_1/start', target='_blank') final project
+        |  in the 
+        a(href='http://vis.pku.edu.cn/wiki/public_course/visclass_f12/start', target='_blank') fall 2012 Visualization course
+        |  at Peking University. It is an experimental visualization of a 
+        abbr.tip(title="China's Twitter") Weibo
+        |  dataset, including 1,425 Weibo users and 1,930 
+        abbr.tip(title='Tweets') Weibo statuses
+        |  (like tweets) in 4 topics.
+
+      h2 Purpose
+      p We aim to reveal the time-wise evolution of popular topics. Specifically:
+      ul
+        li To illustrate the evolution of topic popularity and related users.
+        li To show the status distribution in terms of topic, time, author location and gender.
+        li Discover critical users and statuses in a topic.
+
+      h2 Design
+      p There are three views in this visualization: status chart, topic chart, and user chart.
+        
+      p The main view is the 7-layer bubble chart of statuses. Each bubble corresponds to a Weibo status. The size reflects its influence (i.e. number of reposts and comments), while the color maps to its topic. To simplify the visualization, we grouped statuses into 7 layers based on the time they are posted. If you are interested in the time-wise distributed of a layer, you can expand the layer by clicking on it.
+      p On the right side is a stacked area chart to demonstrate a big picture of topic evolution, in either absolute value or in percentage. Clicking on a topic layer in the stack will filter Weibo statuses on the left.
+      p The bubble chart at the top represents users. Each bubble is a user, grouped by location. The size represents his / her influence (i.e. number of followers), and the color represents gender. Each status bubble is linked to its author. Users can be selected by cliking on a single bubble or on a location ellipse.
+
+      h2 Demo
+
+  #vis
+    //- .content
+    //-   h2 Demo
+    svg
+      g#user-status-links-wrapper
+      g#status-layers-wrapper
+      g#statuses-wrapper
+      g#status-stack-wrapper
+      g#provice-ellipses-wrapper
+      g#users-wrapper
+    #stack-normalization-switch
+      .switch.denormalize
+      .switch.normalize
+    #user-info
+      a#profile-link
+        img#avatar
+      #detailed-info
+        #name
+        #location
+        #followers-count
+        #friends-count
+        #statuses-count
+
+  footer
+    .content
+      p
+        | &copy; 2013 
+        a(href='http://scottcheng.com/', target='_blank') Scott Cheng
+        |  &amp; Sylvia Shu
+      p: a(href='https://github.com/scottcheng/weibo-time-vis', target='_blank') Fork the GitHub repo
+
+block append stylesheets
+  link(rel='stylesheet', href='stylesheets/index.css')
+
+block append scripts
+  script
+    $(function() {
+      $('.tip').tipsy({gravity: 's'});
+    });
+  script(src='javascripts/lib/d3.min.js')
+  script(src='javascripts/lib/colorbrewer.js')
+  script(src='javascripts/vis.js')

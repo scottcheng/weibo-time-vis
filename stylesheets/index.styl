@@ -1,0 +1,243 @@
+@import 'lib/reset.css'
+@import 'lib/mixins.styl'
+@import 'lib/stybr.styl'
+
+lightergrey = rgb(240,240,240)
+lightgrey = rgb(189, 189, 189)
+grey = rgb(115, 115, 115)
+darkgrey = rgb(82, 82, 82)
+darkergrey = rgb(37,37,37)
+green = #41ab5d
+lightblue = #ccebc5
+blue = #4eb3d3
+darkblue = #0868ac
+purple = #8c6bb1
+pink = #e7298a
+
+::selection
+  background-color lightblue
+  color #fff
+  fill #fff
+::-moz-selection
+  background-color lightblue
+  color #fff
+  fill #fff
+
+body
+  font-family 'Lucida Grande', Helvetica, Arial, sans-serif
+  margin 0
+  padding 0
+  color darkgrey
+
+  a
+    color inherit
+    transition color .25s
+    text-decoration none
+
+  .content
+    width 600px
+    margin 0 auto
+    img
+      max-width 600px
+
+  #title
+    background-color blue
+    color #fff
+    .content
+      padding 30px 0
+      h1
+        font-size 40px
+
+  #splash
+    .content
+      padding 20px 0
+      text-align center
+      a
+        color blue
+        &:hover
+          color pink
+      p
+        margin 15px 0
+
+  #write-up,
+  footer
+    background-color blue
+    color #fff
+    a
+      color lightblue
+      &:hover
+        color #fff
+    .content
+      padding 30px 0 15px
+      h2
+        font-size 30px
+        margin 30px 0 15px
+      p,
+      ul
+        font-size 15px
+        margin 15px 0
+        line-height 23px
+      ul
+        padding-left 25px
+        list-style circle
+      abbr
+        cursor help
+
+  .tipsy
+    .tipsy-arrow
+      display none
+    .tipsy-inner
+      background-color rgba(#fff, 1)
+      color grey
+      border 1px solid rgba(lightergrey, 1)
+      div.status-info
+        text-align left
+        .status-content
+          margin-bottom 4px
+      div.user-info
+        margin-left 55px
+        text-align left
+        .user-name
+          font-weight bold
+          margin-bottom 4px
+      img.avatar
+        float left
+      clearfix()
+
+  #vis
+    padding 50px 50px 20px
+    margin 0
+    position relative
+    text-align center
+    // .content
+    //   h2
+    //     font-size 30px
+    //     color blue
+    //     margin -20px 0 15px
+    //     text-align left
+    svg
+      display inline-block
+      path.province-ellipse
+        stroke lightergrey
+        fill lightgrey
+        transition fill-opacity .25s, stroke-opacity .25s
+        cursor pointer
+        &.highlighted
+          fill-opacity .3
+          stroke-opacity 1
+        &.not-highlighted
+          fill-opacity .1
+          stroke-opacity 1
+        &.normal
+          fill-opacity .1
+          stroke-opacity 1
+
+      circle.userplot
+        fill-opacity .5
+        transition fill-opacity .25s, stroke-opacity .25s
+        cursor pointer
+        &.highlighted
+          fill-opacity .8
+          stroke-opacity 1
+        &.not-highlighted
+          fill-opacity .2
+          stroke-opacity 1
+        &.normal
+          fill-opacity .5
+          stroke-opacity 1
+
+      g#status-layers-wrapper
+        path.layer-baseline
+          stroke lightergrey
+          fill lightgrey
+          stroke-opacity 1
+          fill-opacity .1
+          cursor pointer
+
+      g#statuses-wrapper
+        circle.status
+          fill lightgrey
+          fill-opacity .5
+          transition fill-opacity .25s
+          cursor pointer
+        &.selecting
+          circle.status
+            fill-opacity .15
+            &.selected
+              fill-opacity .75
+
+      g#user-status-links-wrapper
+        path.user-status-link
+          stroke lightgrey
+          stroke-opacity .075
+          fill transparent
+          stroke-width 1
+          transition stroke-opacity .25s, stroke-width .25s
+          &.expanded
+            stroke-width 1.5
+            stroke-opacity .15
+          &.topic-deselected
+            stroke-width 0
+        &.selecting
+          path.user-status-link
+            stroke-opacity .05
+            &.selected
+              stroke-opacity .25
+              stroke-width 1.5
+              &.expanded
+                stroke-opacity .3
+            &.topic-deselected
+              stroke-width 0
+
+      g#status-stack-wrapper
+        path.status-stack-layer
+          fill lightgrey
+          fill-opacity .65
+          stroke-width 1px
+          stroke #fff
+          stroke-opacity .25
+          transition color .25s, fill-opacity .25s
+          cursor pointer
+        &.selecting
+          path.status-stack-layer
+            fill-opacity .3
+        path.status-stack-layer
+          &:hover
+            fill-opacity .75
+        &.selecting
+          path.status-stack-layer
+            &.selected
+              fill-opacity .9
+        text.stack-time-label
+          font-size 10px
+          fill rgba(grey, .5)
+
+    #stack-normalization-switch
+      .switch img
+        position absolute
+        opacity .3
+        cursor pointer
+        transition opacity .25s
+        &:hover
+          opacity .5
+        &.active
+          opacity .8
+
+    #user-info
+      position absolute
+      background-color rgba(#fff, .75)
+      color grey
+      border 1px solid rgba(grey, .25)
+      width 98px
+      font-size 10px
+      border-radius 5px
+      display none
+      #avatar
+        width 98px
+        height 98px
+        border-radius 2px 2px 0 0
+      #detailed-info
+        padding 5px
+        #name
+          font-weight bold
+          margin-bottom 5px
