@@ -740,7 +740,7 @@ var vis = function(data) {
           .css('left', stackLeft + stackWidth - iconWidth - iconMargin + 50)
           .css('top', stackTop + iconMargin + 50)
           .attr({
-            src: '/images/stacked-area-chart.png',
+            src: 'images/stacked-area-chart.png',
             width: iconWidth,
             height: iconHeight
           })
@@ -755,7 +755,7 @@ var vis = function(data) {
           .css('left', stackLeft + stackWidth - iconWidth - iconMargin + 50)
           .css('top', stackTop + iconMargin * 2 + iconHeight + 50)
           .attr({
-            src: '/images/stacked-area-chart-n.png',
+            src: 'images/stacked-area-chart-n.png',
             width: iconWidth,
             height: iconHeight
           })
