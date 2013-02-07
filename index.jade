@@ -7,7 +7,7 @@ block content
 
   #splash
     .content
-      a(href='#vis', title='Demo', onclick="$('html, body').animate({scrollTop: $('#vis').offset().top});return false;")
+      a(href='#vis', title='Demo', onclick="$('html, body').animate({scrollTop: $('svg').offset().top});return false;")
         p
           img(src='images/screenshots/initial.png')
         p Play with it below &darr;
@@ -39,6 +39,16 @@ block content
       p On the right side is a stacked area chart to demonstrate a big picture of topic evolution, in either absolute value or in percentage. Clicking on a topic layer in the stack will filter Weibo statuses on the left.
       p The bubble chart at the top represents users. Each bubble is a user, grouped by location. The size represents his / her influence (i.e. number of followers), and the color represents gender. Each status bubble is linked to its author. Users can be selected by cliking on a single bubble or on a location ellipse.
 
+  #screenshots
+    .content
+      h2 Screenshots
+      ol#screenshots-list
+        each scrshot in [{name: 'initial', title: 'Initial state'}, {name: 'expand-time-group', title: 'Expand time layers'}, {name: 'filter-topic', title: 'Filter statuses by topic'}, {name: 'filter-province', title: 'Filter users by location'}, {name: 'filter-user', title: 'Select single user'}, {name: 'filter-topic-user', title: 'Filter by topic and user'}]
+          li: a(href='images/screenshots/#{scrshot.name}-small.png', rel='lightbox[screenshots]', title=scrshot.title)
+            img.screenshot.tip(src='images/screenshots/#{scrshot.name}-small.png', title=scrshot.title)
+
+  #demo
+    .content
       h2 Demo
 
   #vis
@@ -72,12 +82,14 @@ block content
 
 block append stylesheets
   link(rel='stylesheet', href='stylesheets/index.css')
+  link(rel='stylesheet', href='stylesheets/lib/lightbox.css')
 
 block append scripts
   script
     $(function() {
-      $('.tip').tipsy({gravity: 's'});
+      $('.tip').tipsy({gravity: 'n', fade: true});
     });
+  script(src='javascripts/lib/lightbox.js')
   script(src='javascripts/lib/d3.min.js')
   script(src='javascripts/lib/colorbrewer.js')
   script(src='javascripts/vis.js')
