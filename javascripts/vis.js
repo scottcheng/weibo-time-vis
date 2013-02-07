@@ -68,8 +68,8 @@ var vis = function(data) {
     .attr('height', 808);
 
   // Initialize detailed user info part.
-  $('#user-info').css('left', axisW + marginIn);
-  $('#user-info').css('top', marginSide);
+  $('#user-info').css('left', axisW + marginIn + 50);
+  $('#user-info').css('top', marginSide + 50);
   $('#user-info').fadeOut();
 
   var users = (function(){
@@ -984,7 +984,7 @@ d3.json('data/users.json', function(users) {
     d3.json('data/provinces.json', function(provinces) {
       var filteredStatuses = [];
       statuses.forEach(function(d) {
-        if (Math.random() < .5) {
+        if (Math.random() < .75) {
           filteredStatuses.push(d);
         }
       });
